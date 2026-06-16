@@ -1,2 +1,2 @@
 learning c
-everything run on kali linux x86_64
+i use gcc version 15.2.0 (Debian 15.2.0-7)
