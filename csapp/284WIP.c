@@ -23,55 +23,27 @@ int main(int argc, char const *argv[])
 }
 
 int float_le(float x, float y) {
-    // sorry
-
     unsigned ux = *(unsigned*)&x;
     unsigned uy = *(unsigned*)&y;
 
     unsigned sx = ux >> 31;
     unsigned sy = uy >> 31;
 
-    unsigned mx = ux & 0x007FFFFFu;
-    unsigned my = uy & 0x007FFFFFu;
-
-    unsigned ex = (ux >> 23) & 0x000000FFu;
-    unsigned ey = (uy >> 23) & 0x000000FFu;
-
-    if (ex == 0 && ey == 0 && mx == 0 && my == 0) {
-        return 1;
-    }
-    if (sx > sy) {
-        return 1;
-    }
-    if (sx < sy) {
-        return 0;
-    }
-
-    if (sx) {
-        unsigned temp;
-
-        temp = mx;
-        mx = my;
-        my = temp;
-
-        temp = ex;
-        ex = ey;
-        ey = temp;
-    }
-
-    if (ex < ey) {
-        return 1;
-    }
-    if (ey < ex) {
-        return 0;
-    }
-
-    if (mx < my) {
-        return 1;
-    }
-
-    if (my < mx) {
-        return 0;
-    }
-    return 1;
+    /*
+    if both are zero, return 1
+    compare the signs, if different, return 1 if x is the negative one, 0 if y
+    if equal, go on to compare them normally if both positive, but reverse if negative
+    */
+    return ((ux & 0x7FFFFFFF) == 0) && ((uy & 0x7FFFFFFF) == 0) ? 1 : (
+        sx > sy ? 1 : 
+        (sy > sx ? 0 : 
+            sx == 1 ?
+                ((ux & 0x7FFFFFFF) >= (uy & 0x7FFFFFFF) ? 1 : 
+                    0
+                )
+                :
+                ((ux & 0x7FFFFFFF) <= (uy & 0x7FFFFFFF) ? 1 : 
+                0
+                )
+        ));
 }
