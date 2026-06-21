@@ -22,7 +22,7 @@ https://www.tablesgenerator.com/markdown_tables
 | 512                  | 6000 | 0         | 9  | 512          | 512.0                      |
 | Largest denormalized | 03FF | 1023/1024 | 0  | 1023 * 2^-24 | 0.000060975551605224609375 |
 | -Infinity            | FC00 | -         | -  | -Infinity    | -Infinity                  |
-| 0x3BB0               | 3BB0 | 58/64     | -1 | 61*2^-6      | 0.953125                   |
+| 0x3BB0               | 3BB0 | 59/64     | -1 | 123 * 2^-7   | 0.9609375                  |
 
 Hex: The four hexadecimal digits describing the encoded form.
 
@@ -62,7 +62,6 @@ formatting specification of printf.
 
 // -Infinity: 1 11111 0000000000 | FC00
 
-// 3BB0 | 0011 1011 1011 0000
-// 0 01110 1110110000
-// sign=0, exp=14-15=-1, m=1.111011  1/2 + 1/4 + 1/8 + 1/32 + 1/64 = 58/64
-// (1 + 58/64) * 2^-1 = (1 + 58/64) * 0.5 = 0.953125
+// 3BB0 | 0011 1011 1011 0000 | 0 01110 1110110000
+// sign=0, exp=14-15=-1, m=59/64
+// (1 + 59/64) * 2^-1 = 123/64 * 2^-1 = 123 * 2^-7 = 
