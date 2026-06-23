@@ -19,7 +19,6 @@ float_bits float_negate(float_bits f);
 
 int main(int argc, char const *argv[])
 {
-    float_bits max = ~0;
     for (float_bits counter = 0;; counter++) {
         float fcounter = *(float*)&counter;
         float negfcounter = -fcounter;
