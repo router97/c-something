@@ -20,11 +20,6 @@ float_bits float_twice(float_bits f) {
         exp += 1;
     } else {
         frac <<= 1;
-
-        if (frac & 0x800000) {
-            frac &= 0x7FFFFF;
-            exp = 1;
-        }
     }
 
     return (sign << 31) | (exp << 23) | frac;
