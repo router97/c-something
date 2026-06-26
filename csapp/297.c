@@ -102,7 +102,6 @@ float_bits float_i2f(int i) {
         }
     }
     frac &= 0x7FFFFF;
-
-
+    
     return (sign << 31) | (exp << 23) | frac;
 }
