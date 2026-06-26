@@ -20,18 +20,14 @@ float_bits float_half(float_bits f) {
         exp -= 1;
     } else {
         if (exp == 1) {
-            exp == 0;
+            exp = 0;
             frac |= 0x800000;
         }
 
-        unsigned discarded = frac & 0x00000001;
-        frac >>= 1;
-
-        if (discarded) {
-            if (frac & 0x00000001) {
-                frac++;
-            }
+        if ((frac & 0x1) && (frac & 0x2)) {
+            frac += 2;
         }
+        frac >>= 1;
     }
     
     return (sign << 31) | (exp << 23) | frac;
