@@ -28,7 +28,7 @@ float_bits float_half(float_bits f) {
         frac >>= 1;
 
         if (discarded) {
-            if (frac & 0x00000001;) {
+            if (frac & 0x00000001) {
                 frac++;
             }
         }
