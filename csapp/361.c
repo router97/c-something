@@ -17,7 +17,10 @@ jump instructions.
 */
 
 long cread_alt(long *xp) {
-    long res = 0;
-    if (xp) res = *xp;
-    return res;
-} // my compiler doesn't want to use cmov but this should be suitable for it to be used
+    long zero = 0;
+    long *to_dereference = xp;
+    if (!xp) {
+        to_dereference = &zero;
+    }
+    return *to_dereference;
+}
