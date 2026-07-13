@@ -1,0 +1,16 @@
+        .pos 0x100 # Start code at address 0x100
+0x100       irmovq $15,%rbx
+0x10A       rrmovq %rbx,%rcx
+        loop:
+0x10C       rmmovq %rcx,-3(%rbx)
+0x116       addq %rbx,%rcx
+0x118       jmp loop
+0x121       ...
+
+
+irmovq  3 0     F 3     0F 00 00 00 00 00 00 00     10  bytes
+rrmovq  2 0     3 1                                 2   bytes
+
+rmmovq  4 0     1 3     FD FF FF FF FF FF FF FF     10  bytes
+addq    6 0     3 1                                 2   bytes
+jmp     7 0             0C 01 00 00 00 00 00 00     9   bytes

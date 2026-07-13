@@ -1,0 +1,12 @@
+sum:
+    xorq %rax,%rax          sum = 0
+    andq %rsi,%rsi          Set CC
+    jmp test                Goto test
+loop:
+    mrmovq (%rdi),%r10      Get *start
+    addq %r10,%rax          Add to sum
+    iaddq $8, %rdi
+    iaddq $-1, %rsi
+test:
+    jne loop                Stop when 0
+    ret                     Return
