@@ -1,0 +1,19 @@
+In Section 3.4.2, the x86-64 pushq instruction was described as decrementing the
+stack pointer and then storing the register at the stack pointer location. So, if we
+had an instruction of the form pushq REG, for some register REG, it would be
+equivalent to the code sequence
+
+subq $8,%rsp        Decrement stack pointer
+movq REG, (%rsp)    Store REG on stack
+
+A. In light of analysis done in Practice Problem 4.7, does this code sequence
+correctly describe the behavior of the instruction pushq %rsp? Explain.
+
+It doesn't, because the decreased value of rsp will be pushed
+
+
+B. How could you rewrite the code sequence so that it correctly describes both
+the cases where REG is %rsp as well as any other register?
+
+movq REG, -8(%rsp)
+subq $8,%rsp
