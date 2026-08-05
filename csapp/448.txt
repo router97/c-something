@@ -1,0 +1,22 @@
+/*
+Modify the code you wrote for Problem 4.47 to implement the test and swap in
+the bubblesort function (lines 6–11) using no jumps and at most three conditional
+moves.
+*/
+
+*i in %rdx
+
+mrmovq (%rdx), %r8      // r8 = *i
+mrmovq 8(%rdx), %r9     // r9 = *(i+1)
+
+rrmovq %r9, %r12
+subq %r8, %r12
+
+rrmovq %r8, %r12
+rrmovq %r9, %r13
+
+cmovl %r8, %r13
+cmovl %r9, %r12
+
+rmmovq %r12, 8(%rdx)
+rmmovq %r13, (%rdx)
