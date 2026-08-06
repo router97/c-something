@@ -12,7 +12,6 @@ your implementation of switchv will handle both the cases handled explicitly as
 well as those that trigger the default case.
 */
 
-
 #include <stdio.h>
 /* Example use of switch statement */
 
@@ -57,20 +56,18 @@ halt
 
 .align 8
 table:
-    .quad L0 # 0
-    .quad L4 # 1
-    .quad L1 # 2
-    .quad L3 # 3
-    .quad L4 # 4
-    .quad L2 # 5
+    .quad L0
+    .quad L4
+    .quad L1
+    .quad L3
+    .quad L4
+    .quad L2
 
 main:
     pushq %r10
     irmovq $64, %rdi
-    subq %rdi, %rsp # allocate space for long vals[CNT]
+    subq %rdi, %rsp
     xorq %r10, %r10
-    # vals in %rsp
-    # i in %r10
     
 .for_start:
     rrmovq %r10, %r8
