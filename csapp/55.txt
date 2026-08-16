@@ -1,0 +1,46 @@
+Suppose we wish to write a function to evaluate a polynomial, where a polynomial
+of degree n is defined to have a set of coefficients a(0), a(1), a(2),...,a(n). For a value x,
+we evaluate the polynomial by computing
+
+a(0) + a(1)*x + a(2)*x^2 + ... + a(n)*x^n               (5.2)
+
+This evaluation can be implemented by the following function, 
+having as arguments an array of coefficients a, a value x, and the polynomial degree degree (the
+value n in Equation 5.2). In this function, we compute both the successive terms
+of the equation and the successive powers of x within a single loop:
+
+double poly(double a[], double x, long degree)
+{
+    long i;
+    double result = a[0];
+    double xpwr = x; /* Equals x^i at start of loop */
+    for (i = 1; i <= degree; i++) {
+        result += a[i] * xpwr;
+        xpwr = x * xpwr;
+    }
+    return result;
+}
+
+A. For degree n, how many additions and how many multiplications does this
+code perform?
+
+2n fp multiplications
+n fp additions
+n int additions
+
+B. On our reference machine, with arithmetic operations having the latencies
+shown in Figure 5.12, we measure the CPE for this function to be 5.00. 
+Explain how this CPE arises based on the data dependencies formed between
+iterations due to the operations implementing lines 7–8 of the function.
+
+this is due to the latency of floating point multiplication being 5, 
+and there being 2 floating point multipliers, 
+so the longest dependency is 5 cycles
+
+| -    | 1           | 2    | 3    | 4    | 5    | 1           | 2    | 3    | 4    | 5    |
+|------|-------------|------|------|------|------|-------------|------|------|------|------|
+| mul1 | a[i] * xpwr | (->) | (->) | (->) | (->) | a[i] * xpwr | (->) | (->) | (->) | (->) |
+| mul2 | ax * xpwr   | (->) | (->) | (->) | (->) | x * xpwr    | (->) | (->) | (->) | (->) |
+| add  |             |      |      |      |      | result+=    | (->) | (->) |      |      |
+
+result+=, being calculated at the next iteration, fed from the previous
