@@ -1,0 +1,47 @@
+Let us continue exploring ways to evaluate polynomials, as described in Practice
+Problem 5.5. We can reduce the number of multiplications in evaluating a polynomial 
+by applying Horner’s method, named after British mathematician William G.
+Horner (1786–1837). The idea is to repeatedly factor out the powers of x to get
+the following evaluation:
+
+a0 + x(a1 + x(a2 + ... + x(an−1 + xan) ...))            (5.3)
+
+Using Horner’s method, we can implement polynomial evaluation using the
+following code:
+
+/* Apply Horner’s method */
+double polyh(double a[], double x, long degree)
+{
+    long i;
+    double result = a[degree];
+    for (i = degree-1; i >= 0; i--)
+        result = a[i] + x*result;
+    return result;
+}
+
+A. For degree n, how many additions and how many multiplications does this
+code perform?
+
+n additions
+n multiplications
+
+B. On our reference machine, with the arithmetic operations having the latencies shown in Figure 5.12, 
+we measure the CPE for this function to be 8.00.
+Explain how this CPE arises based on the data dependencies formed between iterations due to the operations 
+implementing line 7 of the function.
+
+|     | 1        | 2    | 3    | 4    | 5    | 6      | 7    | 8    | 1        | 2    | 3    | 4    | 5    | 6      | 7    | 8    |
+|-----|----------|------|------|------|------|--------|------|------|----------|------|------|------|------|--------|------|------|
+| mul | x*result | (->) | (->) | (->) | (->) |        |      |      | x*result | (->) | (->) | (->) | (->) |        |      |      |
+| add |          |      |      |      |      | + a[i] | (->) | (->) |          |      |      |      |      | + a[i] | (->) | (->) |
+
+result is the critical data dependency between iterations, and we need to calculate a[i] + x*result to get it
+x*result requires the old result immediately, and is calculated first, taking 5 cycles
+we need to wait the 5 cycles to then add a[i], which takes another 3 cycles
+only after waiting another 3 cycles can we start the next iteration,
+not utilizing instruction level parallelism at all.
+
+C. Explain how the function shown in Practice Problem 5.5 can run faster, even
+though it requires more operations.
+
+it requires n more multiplications, however that does not change the cpe, since it is executed in parallel
