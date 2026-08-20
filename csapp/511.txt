@@ -1,0 +1,51 @@
+We saw that our measurements of the prefix-sum function psum1 (Figure 5.1) yield
+a CPE of 9.00 on a machine where the basic operation to be performed, 
+floating-point addition, has a latency of just 3 clock cycles. Let us try to understand why
+our function performs so poorly.
+
+The following is the assembly code for the inner loop of the function:
+
+Inner loop of psum1
+a in %rdi, i in %rax, cnt in %rdx
+.L5:                                    loop:
+vmovss -4(%rsi,%rax,4), %xmm0               Get p[i-1]
+vaddss (%rdi,%rax,4), %xmm0, %xmm0          Add a[i]
+vmovss %xmm0, (%rsi,%rax,4)                 Store at p[i]
+addq $1, %rax                               Increment i
+cmpq %rdx, %rax                             Compare i:cnt
+jne .L5                                     If !=, goto loop
+
+Perform an analysis similar to those shown for combine3 (Figure 5.14) and for
+write_read (Figure 5.36) to diagram the data dependencies created by this loop,
+and hence the critical path that forms as the computation proceeds. Explain why
+the CPE is so high.
+
+
+
+Because there is a write/read dependency between iterations.
+The critical path is load + floating addition + store
+
+                                ┌──────┐
+                                │ %rax │
+                                └────┬─┘
+─────────────────────────────────────┼──
+        ┌──────┐  ┌──────┐           │  
+ p[i-1] │ load │  │ load │ a[i]      │  
+        └─────┬┘  └┬─────┘           │  
+             ┌▼────▼┐        ◄───────┼  
+             │ fadd │                │  
+             └───┬──┘                │  
+             ┌───▼──┐           ┌────▼─┐
+        p[i] │s_data│           │ add  │
+             └┬─────┘           └────┬─┘
+──────────────┼──────────────────────┼──
+        ┌─────▼┐  ┌──────┐           │  
+   p[i] │ load │  │ load │ a[i+1]    │  
+        └─────┬┘  └┬─────┘           │  
+             ┌▼────▼┐        ◄───────┼  
+             │ fadd │                │  
+             └───┬──┘                │  
+             ┌───▼──┐           ┌────▼─┐
+             │s_data│           │ add  │
+             └──────┘           └──────┘
+────────────────────────────────────────
