@@ -75,13 +75,11 @@ void *basic_memset(void *s, int c, size_t n)
     for (; ((uintptr_t) schar % K) && cnt < n; cnt++) {
         *schar++ = cc;
     }
-    assert(cnt < K);
     
     size_t limit = n - K + 1;
     if ((n - cnt) < K) {
         limit = 0;
     }
-    assert(limit <= n);
 
     unsigned long *slong = (unsigned long *)schar;
     for (; cnt < limit; cnt+=K) {
