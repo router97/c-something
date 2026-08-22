@@ -58,6 +58,7 @@ operator, the testing may be performed with unsigned arithmetic. (See Section 2.
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <stdint.h>
 
 void *basic_memset(void *s, int c, size_t n)
 {
@@ -71,7 +72,7 @@ void *basic_memset(void *s, int c, size_t n)
         nc |= nc << 8;
     }
     
-    for (; ((unsigned long) schar % K) && cnt < n; cnt++) {
+    for (; ((uintptr_t) schar % K) && cnt < n; cnt++) {
         *schar++ = cc;
     }
     assert(cnt < K);
