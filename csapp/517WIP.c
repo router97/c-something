@@ -68,7 +68,7 @@ void *basic_memset(void *s, int c, size_t n)
     nc |= nc << 16;
     nc |= nc << 32;
     
-    for (; (unsigned long)(schar) % n; cnt++) {
+    for (; (unsigned long)(schar) % sizeof(unsigned long); cnt++) {
         *schar++ = (unsigned char) c;
     }
     size_t longs = sizeof(long);
