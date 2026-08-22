@@ -63,23 +63,27 @@ void *basic_memset(void *s, int c, size_t n)
 {
     size_t cnt = 0;
     unsigned char *schar = s;
-    unsigned long nc = c;
-    nc |= nc << 8;
-    nc |= nc << 16;
-    nc |= nc << 32;
+    unsigned char cc = (unsigned char) c;
+    size_t K = sizeof(unsigned long);
     
-    for (; (unsigned long)(schar) % sizeof(unsigned long); cnt++) {
-        *schar++ = (unsigned char) c;
+    unsigned long nc = cc;
+    for (size_t temp = K-1; temp != 0; temp--) {
+        nc |= nc << 8;
     }
-    size_t longs = sizeof(long);
-    unsigned long *slong = (unsigned long *)schar;
-    size_t limit = n - longs + 1;
     
-    if (limit >> (sizeof(size_t)-1)) {
+    for (; ((unsigned long) schar % K) && cnt < n; cnt++) {
+        *schar++ = cc;
+    }
+    assert(cnt < K);
+    
+    size_t limit = n - K + 1;
+    if ((n - cnt) < K) {
         limit = 0;
     }
+    assert(limit <= n);
 
-    for (; cnt < limit; cnt+=longs) {
+    unsigned long *slong = (unsigned long *)schar;
+    for (; cnt < limit; cnt+=K) {
         *slong++ = nc;
     }
     
@@ -94,38 +98,64 @@ int main(int argc, char const *argv[])
 {
     size_t array_size = sizeof(int)*44;
     int *array = (int*)malloc(array_size);
+    array = (int *)((unsigned long)array);
 
     memset(array, 0xffu, array_size);
     basic_memset(array, 0, 1);
     assert(array[0] == 0xFFFFFF00);
+    assert(array[1] == 0xFFFFFFFF);
+    assert(array[2] == 0xFFFFFFFF);
+    assert(array[3] == 0xFFFFFFFF);
+    assert(array[4] == 0xFFFFFFFF);
+
 
     memset(array, 0xffu, array_size);
     basic_memset(array, 0, 2);
     assert(array[0] == 0xFFFF0000);
+    assert(array[1] == 0xFFFFFFFF);
+    assert(array[2] == 0xFFFFFFFF);
+    assert(array[3] == 0xFFFFFFFF);
+    assert(array[4] == 0xFFFFFFFF);
 
     memset(array, 0xffu, array_size);
     basic_memset(array, 0, 3);
     assert(array[0] == 0xFF000000);
+    assert(array[1] == 0xFFFFFFFF);
+    assert(array[2] == 0xFFFFFFFF);
+    assert(array[3] == 0xFFFFFFFF);
+    assert(array[4] == 0xFFFFFFFF);
 
     memset(array, 0xffu, array_size);
     basic_memset(array, 0, 4);
     assert(array[0] == 0x00000000);
+    assert(array[1] == 0xFFFFFFFF);
+    assert(array[2] == 0xFFFFFFFF);
+    assert(array[3] == 0xFFFFFFFF);
+    assert(array[4] == 0xFFFFFFFF);
 
     memset(array, 0xffu, array_size);
     basic_memset(array, 0, 7);
     assert(array[0] == 0x00000000);
     assert(array[1] == 0xFF000000);
+    assert(array[2] == 0xFFFFFFFF);
+    assert(array[3] == 0xFFFFFFFF);
+    assert(array[4] == 0xFFFFFFFF);
 
     memset(array, 0xffu, array_size);
     basic_memset(array, 0, 8);
     assert(array[0] == 0x00000000);
     assert(array[1] == 0x00000000);
+    assert(array[2] == 0xFFFFFFFF);
+    assert(array[3] == 0xFFFFFFFF);
+    assert(array[4] == 0xFFFFFFFF);
 
     memset(array, 0xffu, array_size);
     basic_memset(array, 0, 9);
     assert(array[0] == 0x00000000);
     assert(array[1] == 0x00000000);
     assert(array[2] == 0xFFFFFF00);
+    assert(array[3] == 0xFFFFFFFF);
+    assert(array[4] == 0xFFFFFFFF);
 
     memset(array, 0xffu, array_size);
     basic_memset(array, 0, 20);
