@@ -14,12 +14,21 @@ Determine how the throughput and latency limits of your machine limit the
 minimum CPE you can achieve for the prefix-sum operation.
 */
 #include <assert.h>
+#include <stdlib.h>
 
 void psum1(float a[], float p[], long n);
 void psum5a(float a[], float p[], long n);
 
 int main(int argc, char const *argv[])
 {
+    float a[10] = {491.0, 31841.4, 1381.12, 481.8, 8591.5, 31.0, 1.0, 0.3, 941.0, 53.0};
+    float p1[10];
+    float p2[10];
+    psum1(a, p1, 10);
+    psum5a(a, p2, 10);
+    for (size_t i = 0; i < 10; i++) {
+        assert(p1[i] == p2[i]);
+    }
     return 0;
 }
 
@@ -79,6 +88,12 @@ void psum5a(float a[], float p[], long n)
 }
 
 /*
+with this pipelining, 10 cycles until new iteration
+1 wasted issue cycle
+so cpe is 10/5 (5x unrolling) = 2
+lower than latency bound
+(only considering the adder)
+
   │        │        │        │        │        │        │        │        │        │        │        │  
   │   0    │   1    │   2    │   3    │   4    │   5    │   6    │   7    │   8    │   9    │   10   │  
   ├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┼──
