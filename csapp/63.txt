@@ -1,0 +1,12 @@
+Estimate the average time (in ms) to access a sector on the following disk:
+
+| Parameter                       | Value      |
+|---------------------------------|------------|
+| Rotational rate                 | 12,000 RPM |
+| T[avg seek]                     | 5 ms       |
+| Average number of sectors/track | 300        |
+
+max rotation = 1/12000 * 60 = 0.005sec = 5ms
+avg rotation = 5/2 = 2.5ms
+avg transfer = 1/12000 * 1/300 * 60/1 = 1/60000 sec = 1/60ms = 0.016ms
+access time = 5 ms + 2.5ms + 0.016ms = ~7.516 ms

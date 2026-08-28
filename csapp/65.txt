@@ -1,0 +1,35 @@
+As we have seen, a potential drawback of SSDs is that the underlying flash memory
+can wear out. For example, for the SSD in Figure 6.14, Intel guarantees about
+128 petabytes (128 x 10^15 bytes) of writes before the drive wears out. Given
+this assumption, estimate the lifetime (in years) of this SSD for the following
+workloads:
+
+A. Worst case for sequential writes: The SSD is written to continuously at a rate
+of 470 MB/s (the average sequential write throughput of the device).
+
+(128 * 10^15)  /  (470 * 10^6)
+128,000,000,000,000,000 / 470,000,000
+272,340,425 sec
+272,340,425 / 31,536,000
+~8.6 years
+
+
+B. Worst case for random writes: The SSD is written to continuously at a rate
+of 303 MB/s (the average random write throughput of the device).
+
+(128 * 10^15)  /  (303 * 10^6)
+128,000,000,000,000,000 / 303,000,000
+422,442,244 sec
+422,442,244 / 31,536,000
+~13.3 years
+
+
+C. Average case: The SSD is written to at a rate of 20 GB/day (the average
+daily write rate assumed by some computer manufacturers in their mobile
+computer workload simulations).
+
+(128 * 10^15)  /  (20 * 10^9)
+128,000,000,000,000,000 / 20,000,000,000
+6,400,000 days
+6,400,000 / 365
+~17,534.2 years

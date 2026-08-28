@@ -1,0 +1,3 @@
+Using the data from the years 2005 to 2015 in Figure 6.15(c), estimate the year
+when you will be able to buy a petabyte (10^15 bytes) of rotating disk storage for
+$200. Assume actual dollars (no inflation).
