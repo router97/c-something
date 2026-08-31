@@ -1,0 +1,28 @@
+Imagine a hypothetical cache that uses the high-order s bits of an address as the
+set index. For such a cache, contiguous chunks of memory blocks are mapped to
+the same cache set.
+
+A. How many blocks are in each of these contiguous array chunks?
+2^t blocks
+
+
+B. Consider the following code that runs on a system with a cache of the form
+(S, E, B, m) = (512, 1, 32, 32):
+
+int array[4096];
+for (i = 0; i < 4096; i++)
+    sum += array[i];
+
+What is the maximum number of array blocks that are stored in the cache
+at any point in time?
+
+s = log2(512) = 9
+t = 32 − (9 + 5) = 18
+C = 32 * 512 = 16,384 bytes
+array size = 4096 * 4 = 16,384 bytes
+
+each set is 8MB 
+
+array is (16,384 / 32 = 512) blocks long
+only 1 block, except if some of the blocks of the array belong to one set, some to the other one
+in that case 2

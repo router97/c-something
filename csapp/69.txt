@@ -1,0 +1,31 @@
+The following table gives the parameters for a number of different caches. For
+each cache, determine the number of cache sets (S), tag bits (t), set index bits (s),
+and block offset bits (b).
+
+| Cache | m  | C     | B  | E  | S   | t  | s | b |
+|-------|----|-------|----|----|-----|----|---|---|
+| 1.    | 32 | 1,024 | 4  | 1  | 256 | 22 | 8 | 2 |
+| 2.    | 32 | 1,024 | 8  | 4  | 32  | 24 | 5 | 3 |
+| 3.    | 32 | 1,024 | 32 | 32 | 1   | 27 | 0 | 5 |
+
+1.
+C = B * E * S
+1024 = 4 * S
+S = 256
+
+t = m - (s + b)
+t = 32 - (8 + 2) = 22
+
+2.
+1024 = 8 * 4 * S
+1024/32 = S
+S = 32
+
+t = 32 - (5 + 3) = 24
+
+3.
+1024 = 32*32 * S
+1024 = 1024*S
+S = 1
+
+t = 32 - 5 = 27

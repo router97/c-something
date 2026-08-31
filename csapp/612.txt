@@ -1,0 +1,10 @@
+The following figure shows the format of an address (1 bit per box). Indicate
+(by labeling the diagram) the fields that would be used to determine the following:
+
+CO. The cache block offset
+CI. The cache set index
+CT. The cache tag
+
+| 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| CT | CT | CT | CT | CT | CT | CT | CT | CI | CI | CI | CO | CO |

@@ -1,0 +1,22 @@
+Repeat Problem 6.13 for memory address 0x0CB4.
+
+0x0CB4
+0b1100 1011 0100
+
+A. Address format (1 bit per box):
+| 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+|----|----|----|---|---|---|---|---|---|---|---|---|---|
+| 0  | 1  | 1  | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 1 | 0 | 0 |
+
+CO = 0
+CI = 0b101 = 0x5
+CT = 0b01100101 = 0x65
+
+B. Memory reference:
+| Parameter               | Value |
+|-------------------------|-------|
+| Cache block offset (CO) | 0x0   |
+| Cache set index (CI)    | 0x5   |
+| Cache tag (CT)          | 0x65  |
+| Cache hit? (Y/N)        | N     |
+| Cache byte returned     | 0x__  |

@@ -1,0 +1,18 @@
+In the previous dotprod example, what fraction of the total references to x and y
+will be hits once we have padded array x?
+
+float dotprod(float x[12], float y[8])
+{
+    float sum = 0.0;
+    int i;
+
+    for (i = 0; i < 8; i++)
+        sum += x[i] * y[i];
+    return sum;
+}
+
+4 misses - x[0], y[0], x[4], y[4]
+16 - 4 = 12 hits
+
+4 / 16 * 100 = 25% misses
+100 - 25 = 75% hits

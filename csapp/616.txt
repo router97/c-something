@@ -1,0 +1,17 @@
+For the cache in Problem 6.12, list all of the hexadecimal memory addresses that
+will hit in set 3.
+
+| 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| CT | CT | CT | CT | CT | CT | CT | CT | CI | CI | CI | CO | CO |
+
+the conditions for a hit in set 3
+CT == 0x32
+CI == 0x3
+CO == 00 || CO == 01 || CO == 10 || CO == 11
+
+so,
+0b0011001001100 = 0x064C
+0b0011001001101 = 0x064D
+0b0011001001110 = 0x064E
+0b0011001001111 = 0x064F
