@@ -14,6 +14,7 @@ A. What is the total number of reads?
 
 
 B. What is the total number of reads that hit in the cache?
+1024 reads
 
 with a 2,048-byte direct-mapped data cache with 32-byte blocks (B = 32).
 2048 / 32 = 64 lines
@@ -36,6 +37,12 @@ grid[30][16-19] 52          grid[31][16-19] 60
 grid[30][20-23] 53          grid[31][20-23] 61
 grid[30][24-27] 54          grid[31][24-27] 62
 grid[30][28-31] 55          grid[31][28-31] 63
+
+
+
+##############################
+I MESSED UP, IT STARTS WITH I=31, BUT IT WON'T CHANGE ANYTHING, SO WHATEVER
+##############################
 
 ITER 0:
 OP          Elem            Status
@@ -87,6 +94,7 @@ load        grid[0][4]      MISS :: load grid[0][4-7] into line 1
 C. What is the hit rate?
 total_x += grid[j][i].x; will always be a miss
 total_y += grid[j][i].y; will always be a hit
+50%
 
 
 D. What would the miss hit be if the cache were twice as big?
