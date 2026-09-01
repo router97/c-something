@@ -1,0 +1,8 @@
+Use the memory mountain in Figure 6.41 to estimate the time, in CPU cycles, to
+read a 16-byte word from the L1 d-cache.
+
+2,100 MHz
+~12,000 MB/s
+
+2100 / 12000 = 0.175 cycles per byte
+0.175 * 16 = 2.8 cycles
