@@ -1,0 +1,63 @@
+This problem concerns the cache in Practice Problem 6.12.
+
+A. List all of the hex memory addresses that will hit in set 2.
+None
+
+
+B. List all of the hex memory addresses that will hit in set 4.
+the conditions for a hit in set 4
+CT == 0xC7 || CT == 0x05
+CI == 0x4
+CO == 00 || CO == 01 || CO == 10 || CO == 11
+
+| 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| CT | CT | CT | CT | CT | CT | CT | CT | 1  | 0  | 0  | CO | CO |
+
+0xC7 = 0b11000111
+0x05 = 0b00000101
+
+0b1 1000 1111 0000 = 0x18F0
+0b1 1000 1111 0001 = 0x18F1
+0b1 1000 1111 0010 = 0x18F2
+0b1 1000 1111 0011 = 0x18F3
+0b0 0000 1011 0000 = 0x00B0
+0b0 0000 1011 0001 = 0x00B1
+0b0 0000 1011 0010 = 0x00B2
+0b0 0000 1011 0011 = 0x00B3
+
+
+C. List all of the hex memory addresses that will hit in set 5.
+the conditions for a hit in set 5
+CT == 0x71
+CI == 0x5
+CO == 00 || CO == 01 || CO == 10 || CO == 11
+
+| 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| CT | CT | CT | CT | CT | CT | CT | CT | 1  | 0  | 1  | CO | CO |
+
+0x71 = 0b01110001
+
+0b0 1110 0011 0100 = 0x0E34
+0b0 1110 0011 0101 = 0x0E35
+0b0 1110 0011 0110 = 0x0E36
+0b0 1110 0011 0111 = 0x0E37
+
+
+D. List all of the hex memory addresses that will hit in set 7.
+the conditions for a hit in set 7
+CT == 0xDE
+CI == 0x7
+CO == 00 || CO == 01 || CO == 10 || CO == 11
+
+| 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| CT | CT | CT | CT | CT | CT | CT | CT | 1  | 1  | 1  | CO | CO |
+
+0xDE = 0b11011110
+
+0b1 1011 1101 1100 = 0x1BDC
+0b1 1011 1101 1101 = 0x1BDD
+0b1 1011 1101 1110 = 0x1BDE
+0b1 1011 1101 1111 = 0x1BDF
