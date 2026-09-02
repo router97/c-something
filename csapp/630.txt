@@ -1,0 +1,31 @@
+Suppose we have a system with the following properties:
+
+. The memory is byte addressable.
+
+. Memory accesses are to 1-byte words (not to 4-byte words).
+
+. Addresses are 13 bits wide.
+
+. The cache is 4-way set associative (E = 4), with a 4-byte block size (B = 4)
+and eight sets (S = 8).
+
+Consider the following cache state. All addresses, tags, and values are given in
+hexadecimal format. The Index column contains the set index for each set of four
+lines. The Tag columns contain the tag value for each line. The V columns contain
+the valid bit for each line. The Bytes 0–3 columns contain the data for each line,
+numbered left to right starting with byte 0 on the left.
+
+A. What is the size (C) of this cache in bytes?
+4 * 4 * 8 = 128
+
+B. The box that follows shows the format of an address (1 bit per box). Indicate
+(by labeling the diagram) the fields that would be used to determine the
+following:
+
+CO. The cache block offset
+CI. The cache set index
+CT. The cache tag
+
+| 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| CT | CT | CT | CT | CT | CT | CT | CT | CI | CI | CI | CO | CO |
