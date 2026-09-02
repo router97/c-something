@@ -1,0 +1,33 @@
+Suppose that a 2 MB file consisting of 512-byte logical blocks is stored on a disk
+drive with the following characteristics:
+
+| Parameter                       | Value      |
+|---------------------------------|------------|
+| Rotational rate                 | 18,000 RPM |
+| T[avg seek]                     | 8 ms       |
+| Average number of sectors/track | 2,000      |
+| Surfaces                        | 4          |
+| Sector size                     | 512 bytes  |
+
+For each case below, suppose that a program reads the logical blocks of the
+file sequentially, one after the other, and that the time to position the head over
+the first block is T[avg seek] + T[avg rotation].
+
+T[avg rotation] = 1/18000 * 60 * 1000 * 1/2 = 1.6(6) ms
+file size in blocks = 2000000 / 512 = 3906.25  ->  3907
+T[avg transfer] = 1/18000 * 1/2000 * 60 * 1000 = 0.0016(6)
+T[access] = 8 + 1.6666 + 0.0016 = ~9.6682
+
+
+A. Best case: Estimate the optimal time (in ms) required to read the file given
+the best possible mapping of logical blocks to disk sectors (i.e., sequential).
+
+T[avg seek] + T[avg rotation] + (T[avg transfer] * blocks)
+8 + 1.6666 + (0.0016 * 3907) = ~15.91 ms
+
+
+B. Random case: Estimate the time (in ms) required to read the file if blocks
+are mapped randomly to disk sectors.
+
+T[access] * blocks
+9.6682 * 3907 = ~37773 ms
