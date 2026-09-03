@@ -1,0 +1,55 @@
+3M decides to make Post-its by printing yellow squares on white pieces of paper.
+As part of the printing process, they need to set the CMYK (cyan, magenta, yellow,
+black) value for every point in the square. 3M hires you to determine the efficiency
+of the following algorithms on a machine with a 1,024-byte direct-mapped data
+cache with 16-byte blocks. You are given the following definitions:
+
+struct point_color {
+    int c;
+    int m;
+    int y;
+    int k;
+};
+
+struct point_color square[16][16];
+int i, j;
+
+Assume the following:
+
+. sizeof(int) = 4.
+
+. square begins at memory address 0.
+
+. The cache is initially empty.
+
+. The only memory accesses are to the entries of the array square. Variables i
+and j are stored in registers.
+
+Determine the cache performance of the following code:
+
+for (i = 15; i >= 0; i--){
+    for (j = 15; j >= 0; j--) {
+        square[i][j].c = 0;
+        square[i][j].m = 0;
+        square[i][j].y = 1;
+        square[i][j].k = 0;
+    }
+}
+
+
+A. What is the total number of writes?
+16 * 16 * 4 = 1024
+
+
+B. What is the total number of writes that hit in the cache?
+1024 / 16 = 64 lines
+4 * 4 = 16 bytes (size of point_color)
+16 * 16 * 16 = 4096 bytes (size of square)
+
+every element maps to it's own block
+one miss per 4 writes
+1024 * 3/4 = 768
+
+
+C. What is the hit rate?
+75%
