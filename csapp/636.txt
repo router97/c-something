@@ -1,0 +1,100 @@
+This problem tests your ability to predict the cache behavior of C code. You are
+given the following code to analyze:
+
+int x[2][128];
+int i;
+int sum = 0;
+
+for (i = 0; i < 128; i++) {
+    sum += x[0][i] * x[1][i];
+}
+
+Assume we execute this under the following conditions:
+
+. sizeof(int) = 4.
+
+. Array x begins at memory address 0x0 and is stored in row-major order.
+
+. In each case below, the cache is initially empty.
+
+. The only memory accesses are to the entries of the array x. All other variables
+are stored in registers.
+
+
+Given these assumptions, estimate the miss rates for the following cases:
+
+A. Case 1: Assume the cache is 512 bytes, direct-mapped, with 16-byte cache
+blocks. What is the miss rate?
+
+512 / 16 = 32 cache lines
+128 * 4 * 2 = 1,024 bytes = 64 blocks (size of array x)
+x[0][0-127] maps to cache lines 0-32
+x[1][0-127] maps to cache lines 0-32
+
+there will be thrashing
+100% miss rate
+
+
+B. Case 2: What is the miss rate if we double the cache size to 1,024 bytes?
+
+1024 / 16 = 64 cache lines
+
+x[0-1][0-127] maps to cache lines 0-63
+
+16 / 4 = 4 ints per block
+
+2 misses, 8 reads per 4 iterations (6 hits)
+
+2 / 8 * 100 = 25% miss rate
+
+
+C. Case 3: Now assume the cache is 512 bytes, two-way set associative using
+an LRU replacement policy, with 16-byte cache blocks. What is the cache
+miss rate?
+
+512 / 16 / 2 = 16 sets
+
+x[0][0-63] maps to sets 0-16
+x[0][64-127] maps to sets 0-16
+x[1][0-63] maps to sets 0-16
+x[1][64-127] maps to sets 0-16
+
+OP          Elem            Status
+load        x[0][0]         MISS :: load x[0][0-3] into line 0
+load        x[1][0]         MISS :: load x[1][0-3] into line 0
+load        x[0][1]         HIT
+load        x[1][1]         HIT
+load        x[0][2]         HIT
+load        x[1][2]         HIT
+load        x[0][3]         HIT
+load        x[1][3]         HIT
+
+load        x[0][4]         MISS :: load x[0][4-7] into line 1
+load        x[1][4]         MISS :: load x[1][4-7] into line 1
+load        x[0][5]         HIT
+load        x[1][5]         HIT
+load        x[0][6]         HIT
+load        x[1][6]         HIT
+load        x[0][7]         HIT
+load        x[1][7]         HIT
+will continue like this
+at index 64 will start replacing values from index 0, but miss rate will be the same
+
+2 misses for 8 reads
+2 / 8 * 100 = 25% miss rate
+
+
+D. For case 3, will a larger cache size help to reduce the miss rate? Why or
+why not?
+
+no
+the cache will still only load 4 elements at a time, 
+so by itself it won't affect the miss rate
+
+
+E. For case 3, will a larger block size help to reduce the miss rate? Why or why
+not?
+
+yes
+a miss happens once every 
+(amount of elements that fit in a block) reads
