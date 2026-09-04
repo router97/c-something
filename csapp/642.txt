@@ -1,0 +1,14 @@
+Given the assumptions in Problem 6.41, what percentage of writes in the following
+code will hit in the cache?
+
+
+char *cptr = (char *) buffer;
+for (; cptr < (((char *) buffer) + 640 * 480 * 4); cptr++)
+    *cptr = 0;
+
+considering the stride-1 pattern,
+each block can hold 2 pixels (8 bytes)
+
+a miss will happen once every 8 writes
+
+7 / 8 * 100 = 87.5% will hit
