@@ -1,0 +1,53 @@
+You are writing a new 3D game that you hope will earn you fame and fortune. You
+are currently working on a function to blank the screen buffer before drawing the
+next frame. The screen you are working with is a 640 x 480 array of pixels. The
+machine you are working on has a 32 KB direct-mapped cache with 8-byte lines.
+The C structures you are using are as follows:
+
+
+struct pixel {
+    char r;
+    char g;
+    char b;
+    char a;
+};
+
+struct pixel buffer[480][640];
+int i, j;
+char *cptr;
+int *iptr;
+
+
+Assume the following:
+. sizeof(char) = 1 and sizeof(int) = 4.
+
+. buffer begins at memory address 0.
+
+. The cache is initially empty.
+
+. The only memory accesses are to the entries of the array buffer. Variables i,
+j, cptr, and iptr are stored in registers.
+
+What percentage of writes in the following code will hit in the cache?
+
+
+for (j = 639; j >= 0; j--) {
+    for (i = 479; i >= 0; i--){
+        buffer[i][j].r = 0;
+        buffer[i][j].g = 0;
+        buffer[i][j].b = 0;
+        buffer[i][j].a = 0;
+    }
+}
+
+480 * 640 * 4 = 1228800 bytes (size of array)
+1228800 / 8 = 153600 blocks (size of array)
+32 * 10^3 = 32000 bytes (cache size)
+32000 / 8 = 4000 blocks (cache size)
+
+buffer[i][j].r = 0 will always be a miss
+and the next iterations won't be able to utilize whatever was loaded previously because by the time it's needed
+it will have been overwritten many times already
+
+3/4 will hit
+75%
