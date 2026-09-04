@@ -46,7 +46,7 @@ B. What is the total number of writes that hit in the cache?
 4 * 4 = 16 bytes (size of point_color)
 16 * 16 * 16 = 4096 bytes (size of square)
 
-every element maps to it's own block
+one element per memory block
 one miss per 4 writes
 1024 * 3/4 = 768
 
