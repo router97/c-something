@@ -1,0 +1,13 @@
+Given the assumptions in Problem 6.41, what percentage of writes in the following
+code will hit in the cache?
+
+
+int *iptr = (int *)buffer;
+for (; iptr < ((int *)buffer + 640*480); iptr++)
+    *iptr = 0;
+
+considering the stride-1 pattern,
+each block can hold 2 pixels (8 bytes)
+int is 4 bytes
+
+50% hit rate
